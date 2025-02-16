@@ -1,7 +1,6 @@
 package main
 
 import (
-	"log"
 	"net/http"
 )
 
@@ -20,7 +19,8 @@ func (app *application) healthCheckHandler(w http.ResponseWriter, r *http.Reques
 		"version": VERSION,
 	}
 
-	if err := writeJSON(w, r, http.StatusOK, data); err != nil {
-		log.Printf("error while encoding to JSON: %s\n", err.Error())
+	if err := writeJSON(w, http.StatusOK, data); err != nil {
+		//log.Printf("error while encoding to JSON: %s\n", err.Error())
+		writeJSONError(w, http.StatusInternalServerError, err.Error())
 	}
 }
